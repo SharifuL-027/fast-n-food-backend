@@ -1,6 +1,10 @@
 // fast-n-food-backend/models/MenuItem.js
 const mongoose = require('mongoose');
 
+// We use predefined categories to keep the UI simple, matching 
+// your European minimalism design philosophy.
+const categories = ['Burgers', 'Pizza', 'Sides', 'Drinks'];
+
 const menuItemSchema = new mongoose.Schema({
   name: { 
     type: String, 
@@ -13,19 +17,28 @@ const menuItemSchema = new mongoose.Schema({
   },
   price: { 
     type: Number, 
-    required: true 
+    required: true, 
+    min: 0 // Cannot be negative
   },
   category: { 
     type: String, 
     required: true, 
-    enum: ['Burgers', 'Pizza', 'Sides', 'Drinks'] // Restricts choices
+    enum: categories // Restricts inputs to valid options
   },
-  // At this stage, we are saving the DIRECT image link from Cloudinary.
-  // In the future admin form stage, we will use an Upload middleware.
+  status: {
+    type: String,
+    enum: ['Active', 'Inactive'],
+    default: 'Active'
+  },
+  // The crucial dynamically uploaded asset
   imageUrl: { 
     type: String, 
     required: true 
+  },
+  cloudinaryId: { // Useful if we ever need to delete the original asset
+    type: String, 
+    required: true 
   }
-}, { timestamps: true }); 
+}, { timestamps: true }); // Automatically adds 'createdAt' and 'updatedAt'
 
 module.exports = mongoose.model('MenuItem', menuItemSchema);
