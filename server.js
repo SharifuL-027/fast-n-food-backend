@@ -1,9 +1,9 @@
-// A. Require necessary modules (the ones you installed!)
-require('dotenv').config(); // MUST be the first line - loads secret data
+
+require('dotenv').config(); 
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-
+const menuRoutes = require('./routes/menuRoutes');
 // B. Initialize the Express Application
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI)
 app.get('/api/test', (req, res) => {
   res.json({ message: "Your backend server is ALIVE!" });
 });
+app.use('/api/menu', menuRoutes);
 
 // F. Start the Server and listen for requests
 app.listen(PORT, () => {
