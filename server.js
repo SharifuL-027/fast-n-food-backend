@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const menuRoutes = require('./routes/menuRoutes');
+const orderRoutes = require('./routes/orderRoutes');
 // B. Initialize the Express Application
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -11,7 +12,7 @@ const PORT = process.env.PORT || 5000;
 // C. Apply Basic Middleware
 app.use(cors()); // Allow requests from our future frontend
 app.use(express.json()); // Allow our API to read JSON data sent to it
-
+app.use('/api/orders', orderRoutes);
 // D. Connect to MongoDB (this uses the mongoose you installed)
 mongoose.connect(process.env.MONGODB_URI)
   .then(() => console.log("✅ Successfully connected to MongoDB!"))
