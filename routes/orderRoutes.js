@@ -31,4 +31,18 @@ router.post('/new', async (req, res) => {
   }
 });
 
+router.put('/:id/status', async (req, res) => {
+  try {
+    const { status } = req.body;
+    const updatedOrder = await Order.findByIdAndUpdate(
+      req.params.id, 
+      { status }, 
+      { new: true }
+    );
+    res.json(updatedOrder);
+  } catch (error) {
+    res.status(500).json({ message: "Failed to update status" });
+  }
+});
+
 module.exports = router;

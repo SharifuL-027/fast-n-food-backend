@@ -1,17 +1,19 @@
-
+// fast-n-food-backend/models/Order.js
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  userEmail: { type: String, required: true },
+  // 👉 NEW: Save the customer's name
+  customerName: { type: String, required: true },
   
-  // 👉 NEW: Save where the customer wants to pick up the food
+  userEmail: { type: String, required: true },
   pickupLocation: { type: String, required: true }, 
   
   items: [
     {
       name: String,
       price: Number,
-      quantity: Number
+      quantity: Number,
+      imageUrl: String // Added image support for dashboard
     }
   ],
   totalAmount: { type: Number, required: true },
