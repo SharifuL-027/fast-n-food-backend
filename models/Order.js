@@ -1,11 +1,12 @@
-// fast-n-food-backend/models/Order.js
+
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
-  userEmail: { 
-    type: String, 
-    required: true 
-  },
+  userEmail: { type: String, required: true },
+  
+  // 👉 NEW: Save where the customer wants to pick up the food
+  pickupLocation: { type: String, required: true }, 
+  
   items: [
     {
       name: String,
@@ -13,15 +14,12 @@ const orderSchema = new mongoose.Schema({
       quantity: Number
     }
   ],
-  totalAmount: { 
-    type: Number, 
-    required: true 
-  },
+  totalAmount: { type: Number, required: true },
   status: { 
     type: String, 
-    default: 'Preparing', 
+    default: 'Pending', 
     enum: ['Pending', 'Preparing', 'Ready', 'Completed', 'Cancelled'] 
   }
-}, { timestamps: true }); // Automatically creates createdAt (Date of order)
+}, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);
